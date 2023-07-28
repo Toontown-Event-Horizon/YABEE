@@ -1636,6 +1636,7 @@ def write_out(fname, anims, from_actions, uv_img_as_tex, sep_anim, a_only,
 
         obj_list += included_armature
         # print("DEBUG: ", obj_list)
+        obj_list = [obj for obj in obj_list if obj is not None]
         print('Objects for export:', [obj.yabee_name for obj in obj_list])
 
         errors += gr.make_hierarchy_from_list(obj_list)
