@@ -1483,7 +1483,7 @@ def generate_shadow_uvs():
 # -----------------------------------------------------------------------
 def write_out(fname, anims, from_actions, uv_img_as_tex, sep_anim, a_only,
               copy_tex, t_path, tbs, tex_processor, b_layers,
-              m_actor, apply_m, pview, loop_normals, export_pbs, force_export_vertex_colors, objects=None):
+              m_actor, apply_m, pview, loop_normals, export_pbs, force_export_vertex_colors, objects=None, actions=None):
     global FILE_PATH, ANIMATIONS, ANIMS_FROM_ACTIONS, EXPORT_UV_IMAGE_AS_TEXTURE, \
         COPY_TEX_FILES, TEX_PATH, SEPARATE_ANIM_FILE, ANIM_ONLY, \
         STRF, CALC_TBS, TEXTURE_PROCESSOR, BAKE_LAYERS, \
@@ -1660,7 +1660,18 @@ def write_out(fname, anims, from_actions, uv_img_as_tex, sep_anim, a_only,
                 file.write(gr.get_full_egg_str())
 
             anim_collectors = []
-            if ANIMS_FROM_ACTIONS:
+            if actions:
+                fps = bpy.context.scene.render.fps / bpy.context.scene.render.fps_base
+
+                for action in bpy.data.actions:
+                    target_name = actions.get(action.name)
+                    if target_name is None:
+                        continue
+                    frange = action.frame_range
+                    ac = AnimCollector(obj_list, int(frange[0]), int(frange[1]),
+                                       fps, target_name, action)
+                    anim_collectors.append(ac)
+            elif ANIMS_FROM_ACTIONS:
                 # Export an animation for each action.
                 fps = bpy.context.scene.render.fps / bpy.context.scene.render.fps_base
 
