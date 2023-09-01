@@ -484,7 +484,12 @@ class EGGMeshObjectData(EGGBaseObjectData):
         color_vtx_ref = []
         if self.obj_ref.data.vertex_colors.active:
             for col in self.obj_ref.data.vertex_colors.active.data:
-                color_vtx_ref.append(col.color)  # We have one color per data color
+                if all(value <= 0.0001 for value in col.color):
+                    # For some reason (0, 0, 0, 0) is the default vertex color in blender. Which is wrong.
+                    color = (1, 1, 1, 1)
+                else:
+                    color = tuple(col.color)
+                color_vtx_ref.append(color)  # We have one color per data color
         return color_vtx_ref
 
     def pre_calc_TBS(self):
