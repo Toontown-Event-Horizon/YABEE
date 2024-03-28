@@ -1673,7 +1673,7 @@ def write_out(fname, anims, from_actions, uv_img_as_tex, sep_anim, a_only,
                     if target_name is None:
                         continue
                     frange = action.frame_range
-                    ac = AnimCollector(obj_list, int(frange[0]), int(frange[1]),
+                    ac = AnimCollector(obj_list, int(frange[0]), int(frange[1]) + 1,
                                        fps, target_name, action)
                     anim_collectors.append(ac)
             elif ANIMS_FROM_ACTIONS:
@@ -1682,7 +1682,7 @@ def write_out(fname, anims, from_actions, uv_img_as_tex, sep_anim, a_only,
 
                 for action in bpy.data.actions:
                     frange = action.frame_range
-                    ac = AnimCollector(obj_list, int(frange[0]), int(frange[1]), fps, action.name, action)
+                    ac = AnimCollector(obj_list, int(frange[0]), int(frange[1]) + 1, fps, action.name, action)
                     anim_collectors.append(ac)
             else:
                 # Export animations named in ANIMATIONS dictionary.
