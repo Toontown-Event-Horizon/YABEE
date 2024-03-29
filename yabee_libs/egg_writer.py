@@ -628,6 +628,8 @@ class EGGMeshObjectData(EGGBaseObjectData):
         else:
             # if material has no texture:
             for mat in self.obj_ref.data.materials:
+                if not mat:
+                    continue
                 nodeTree = mat.node_tree
                 if nodeTree and nodeTree.nodes:
                     for pandaShaderNode in nodeTree.links:
