@@ -483,7 +483,7 @@ class EGGMeshObjectData(EGGBaseObjectData):
     def pre_convert_vtx_color(self):
         color_vtx_ref = []
         if self.obj_ref.data.color_attributes.active_color:
-            color_vtx_ref = [col.color for col in self.obj_ref.data.color_attributes.active_color.data]
+            color_vtx_ref = [col.color_srgb for col in self.obj_ref.data.color_attributes.active_color.data]
         return color_vtx_ref
 
     def pre_calc_TBS(self):
